@@ -1,4 +1,4 @@
-podTemplate(label: 'buildpod' , cloud: 'mycluster.icp', 
+podTemplate(label: 'buildpod' , 
     volumes: [
         hostPathVolume(hostPath: '/etc/docker/certs.d', mountPath: '/etc/docker/certs.d'),
         hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock'),
