@@ -6,9 +6,9 @@ podTemplate(label: 'buildpod',
         configMapVolume(configMapName: 'registry-config', mountPath: '/var/run/configs/registry-config')
     ],
     containers: [
-        containerTemplate(name: 'docker', image: '169.38.98.43:8500/default/docker:latest', command: 'cat', ttyEnabled: true),
-        containerTemplate(name: 'containertest', image: '169.38.98.43:8500/default/containertest:latest', command: 'cat', ttyEnabled: true),
-        containerTemplate(name: 'helm', image: '169.38.98.43:8500/default/k8s-helm:latest', command: 'cat', ttyEnabled: true)
+        containerTemplate(name: 'docker', image: 'docker:latest', command: 'cat', ttyEnabled: true),
+        containerTemplate(name: 'containertest', image: 'containertest:latest', command: 'cat', ttyEnabled: true),
+        containerTemplate(name: 'helm', image: 'k8s-helm:latest', command: 'cat', ttyEnabled: true)
   ]) {
 
     node('buildpod') {
