@@ -1,6 +1,6 @@
 
 
-    node('169.38.98.43') {
+    node {
         checkout scm
         container('docker') {
             stage('Build Docker Image') {
