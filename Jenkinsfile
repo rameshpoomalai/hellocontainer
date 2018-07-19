@@ -1,17 +1,6 @@
-podTemplate(label: 'jenkins-jenkins-slave' ,
-    volumes: [
-        hostPathVolume(hostPath: '/etc/docker/certs.d', mountPath: '/etc/docker/certs.d'),
-        hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock'),
-        secretVolume(secretName: 'registry-account', mountPath: '/var/run/secrets/registry-account'),
-        configMapVolume(configMapName: 'registry-config', mountPath: '/var/run/configs/registry-config')
-    ],
-    containers: [
-        containerTemplate(name: 'docker', image: 'docker:latest', command: 'cat', ttyEnabled: true),
-        containerTemplate(name: 'containertest', image: 'containertest:latest', command: 'cat', ttyEnabled: true),
-        containerTemplate(name: 'helm', image: 'k8s-helm:latest', command: 'cat', ttyEnabled: true)
-  ]) {
 
-    node('master') {
+
+    node('169.38.98.43') {
         checkout scm
         container('docker') {
             stage('Build Docker Image') {
@@ -74,4 +63,3 @@ podTemplate(label: 'jenkins-jenkins-slave' ,
 
 
     }
-}
