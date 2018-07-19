@@ -11,7 +11,7 @@ podTemplate(label: 'jenkins-jenkins-slave' ,
         containerTemplate(name: 'helm', image: 'k8s-helm:latest', command: 'cat', ttyEnabled: true)
   ]) {
 
-    node('169.38.98.43') {
+    node('master') {
         checkout scm
         container('docker') {
             stage('Build Docker Image') {
