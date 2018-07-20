@@ -8,8 +8,7 @@ podTemplate(label: label ,
     ],
     containers: [
         containerTemplate(name: 'docker', image: 'docker', command: 'cat', ttyEnabled: true),
-        containerTemplate(name: 'containertest', image: 'containertest:latest', command: 'cat', ttyEnabled: true),
-        containerTemplate(name: 'helm', image: 'k8s-helm:latest', command: 'cat', ttyEnabled: true)
+        containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm', command: 'cat', ttyEnabled: true)
   ]) {
 
     node(label) {
@@ -40,16 +39,7 @@ podTemplate(label: label ,
                 """
             }
         }
-        container('containertest') {
-            stage('Test built docker Image') {
-                sh """
-                #!/bin/bash
-                NAMESPACE=`cat /var/run/configs/registry-config/namespace`
-                REGISTRY=`cat /var/run/configs/registry-config/registry`
-                container-structure-test  -test.v   -image \${REGISTRY}/\${NAMESPACE}/hello-container:${env.BUILD_NUMBER} /var/tmp/hello-container-test.yaml
-                """
-            }
-        }
+
         container('helm') {
             stage('Deploy new helm release') {
                 sh """
