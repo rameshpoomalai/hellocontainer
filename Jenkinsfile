@@ -1,4 +1,5 @@
-podTemplate(label: 'jenkins-jenkins-slave' ,
+def label = "worker-${UUID.randomUUID().toString()}"
+podTemplate(label: label ,
     volumes: [
         hostPathVolume(hostPath: '/etc/docker/certs.d', mountPath: '/etc/docker/certs.d'),
         hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock'),
@@ -6,12 +7,12 @@ podTemplate(label: 'jenkins-jenkins-slave' ,
         configMapVolume(configMapName: 'registry-config', mountPath: '/var/run/configs/registry-config')
     ],
     containers: [
-        containerTemplate(name: 'docker', image: 'docker:latest', command: 'cat', ttyEnabled: true),
+        containerTemplate(name: 'docker', image: 'docker', command: 'cat', ttyEnabled: true),
         containerTemplate(name: 'containertest', image: 'containertest:latest', command: 'cat', ttyEnabled: true),
         containerTemplate(name: 'helm', image: 'k8s-helm:latest', command: 'cat', ttyEnabled: true)
   ]) {
 
-    node('jenkins-jenkins-slave') {
+    node(label) {
         checkout scm
         container('docker') {
             stage('Build Docker Image') {
