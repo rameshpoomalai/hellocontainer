@@ -11,7 +11,7 @@ podTemplate(label: 'jenkins-jenkins-slave' ,
         containerTemplate(name: 'helm', image: 'k8s-helm:latest', command: 'cat', ttyEnabled: true)
   ]) {
 
-    node('jenkins-stable-jenkins') {
+    node('jenkins-jenkins-slave') {
         checkout scm
         container('docker') {
             stage('Build Docker Image') {
