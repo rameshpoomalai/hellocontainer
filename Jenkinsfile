@@ -1,4 +1,4 @@
-podTemplate(label: 'podbld' ,
+podTemplate(label: 'jenkins-jenkins-slave' ,
     volumes: [
         hostPathVolume(hostPath: '/etc/docker/certs.d', mountPath: '/etc/docker/certs.d'),
         hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock'),
@@ -11,7 +11,7 @@ podTemplate(label: 'podbld' ,
         containerTemplate(name: 'helm', image: 'k8s-helm:latest', command: 'cat', ttyEnabled: true)
   ]) {
 
-    node('podbld') {
+    node('jenkins-jenkins-slave') {
         checkout scm
         container('docker') {
             stage('Build Docker Image') {
