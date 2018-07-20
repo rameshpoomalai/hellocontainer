@@ -12,7 +12,7 @@ podTemplate(label: label ,namespace: "kube-public",serviceAccount :"default:defa
         containerTemplate(name: 'helm', image: 'k8s-helm:latest', command: 'cat', ttyEnabled: true)
   ]) {
 
-    node(label) {
+    node("master") {
         checkout scm
         container('docker') {
             stage('Build Docker Image') {
