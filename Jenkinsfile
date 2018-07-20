@@ -9,10 +9,11 @@ podTemplate(label: label ,namespace: "kube-public",serviceAccount :"default:defa
     containers: [
         containerTemplate(name: 'docker', image: 'docker:latest', command: 'cat', ttyEnabled: true),
         containerTemplate(name: 'containertest', image: 'containertest:latest', command: 'cat', ttyEnabled: true),
-        containerTemplate(name: 'helm', image: 'k8s-helm:latest', command: 'cat', ttyEnabled: true)
+        containerTemplate(name: 'helm', image: 'k8s-helm:latest', command: 'cat', ttyEnabled: true),
+        containerTemplate(name: 'jnlp', image: 'jenkins/jnlp-slave:3.10-1-alpine', args: '${computer.jnlpmac} ${computer.name}')
   ]) {
 
-    node("master") {
+    node(label) {
         checkout scm
         container('docker') {
             stage('Build Docker Image') {
