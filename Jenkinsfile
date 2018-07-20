@@ -1,5 +1,4 @@
-def label = "mypod-${UUID.randomUUID().toString()}"
-podTemplate(label: label ,namespace: "kube-public",serviceAccount :"default:default",
+podTemplate(label: 'jenkins-jenkins-slave' ,
     volumes: [
         hostPathVolume(hostPath: '/etc/docker/certs.d', mountPath: '/etc/docker/certs.d'),
         hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock'),
@@ -9,11 +8,10 @@ podTemplate(label: label ,namespace: "kube-public",serviceAccount :"default:defa
     containers: [
         containerTemplate(name: 'docker', image: 'docker:latest', command: 'cat', ttyEnabled: true),
         containerTemplate(name: 'containertest', image: 'containertest:latest', command: 'cat', ttyEnabled: true),
-        containerTemplate(name: 'helm', image: 'k8s-helm:latest', command: 'cat', ttyEnabled: true),
-        containerTemplate(name: 'jnlp', image: 'jenkins/jnlp-slave:3.10-1-alpine', args: '${computer.jnlpmac} ${computer.name}')
+        containerTemplate(name: 'helm', image: 'k8s-helm:latest', command: 'cat', ttyEnabled: true)
   ]) {
 
-    node(label) {
+    node('master') {
         checkout scm
         container('docker') {
             stage('Build Docker Image') {
