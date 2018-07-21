@@ -51,15 +51,16 @@ podTemplate(label: label ,
 
                 helm list \${CHARTNAME}
 
-                if [ \${?} -ne "0" ]; then
+                #if [ \${?} -ne "0" ]; then
                     # No chart release to update
-                    echo "install new application "
-                    helm install hello-container ./hellocontainer-chart/ --set image.repository=\${REGISTRY}/\${NAMESPACE}/hello-container --set image.tag=${env.BUILD_NUMBER}
-                else
-                    echo "Upgrade the existing application "
-                    helm upgrade hello-container ./hellocontainer-chart/ --set image.repository=\${REGISTRY}/\${NAMESPACE}/hello-container --set image.tag=${env.BUILD_NUMBER}
+                #    echo "install new application "
+                #    helm install hello-container ./hellocontainer-chart/ --set image.repository=\${REGISTRY}/\${NAMESPACE}/hello-container --set image.tag=${env.BUILD_NUMBER}
+                #else
+                #    echo "Upgrade the existing application "
+                #    helm upgrade hello-container ./hellocontainer-chart/ --set image.repository=\${REGISTRY}/\${NAMESPACE}/hello-container --set image.tag=${env.BUILD_NUMBER}
 
-                fi
+                #fi
+                helm install hello-container ./hellocontainer-chart/ --set image.repository=\${REGISTRY}/\${NAMESPACE}/hello-container --set image.tag=${env.BUILD_NUMBER}
                 """
             }
         }
