@@ -53,12 +53,11 @@ podTemplate(label: label ,
 
                 if [ \${?} -ne "0" ]; then
                     # No chart release to update
-                    echo 'No chart release to update'
-                    exit 1
-                fi
+                    helm install hello-container ./hellocontainer-chart/ --set image.repository=\${REGISTRY}/\${NAMESPACE}/hello-container --set image.tag=${env.BUILD_NUMBER}
+                else
+                    helm upgrade hello-container ./hellocontainer-chart/ --set image.repository=\${REGISTRY}/\${NAMESPACE}/hello-container --set image.tag=${env.BUILD_NUMBER}
 
-                # Update Release
-                helm upgrade hello-container ./hellocontainer-chart/ --set image.repository=\${REGISTRY}/\${NAMESPACE}/hello-container --set image.tag=${env.BUILD_NUMBER}
+                fi
                 """
             }
         }
