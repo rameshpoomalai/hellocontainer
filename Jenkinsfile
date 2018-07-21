@@ -61,7 +61,7 @@ podTemplate(label: label ,
 
                 #fi
                 ls
-                helm install hellocontainer-chart ./hellocontainer-chart/ --set image.repository=\${REGISTRY}/\${NAMESPACE}/hello-container --set image.tag=${env.BUILD_NUMBER}
+                helm upgrade hellocontainer-chart  --set image.repository=\${REGISTRY}/\${NAMESPACE}/hello-container --set image.tag=${env.BUILD_NUMBER}
                 """
             }
         }
