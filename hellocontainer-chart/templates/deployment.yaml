@@ -26,10 +26,10 @@ apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
   annotations:
-    prometheus.io/scrape: 'true'  
+    prometheus.io/scrape: 'true'
   name: hello-app
 spec:
-  replicas: {{ .Values.replicaCount }} 
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: hello-app
@@ -46,11 +46,13 @@ spec:
       containers:
       - name: hello-app
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        #image: wizplaycluster.icp:8500/default/hello-container:latest 
+        #image: wizplaycluster.icp:8500/default/hello-container:latest
         # for local development against minikube registry
-        #imagePullPolicy: Never        
+        #imagePullPolicy: Never
         ports:
         - containerPort: 80
+     imagePullSecrets:
+     - name: registry-account
 ---
 apiVersion: v1
 kind: Service
@@ -59,7 +61,7 @@ metadata:
   labels:
     app: hello-service
 spec:
-  type: NodePort 
+  type: NodePort
   ports:
     # the port that this service should serve on
     - port: 80
